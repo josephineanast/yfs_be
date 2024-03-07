@@ -81,4 +81,14 @@ export class CreateEmissionFactorDto {
   @IsEnum(EmissionFactorSubTypeEnum)
   @IsOptional()
   subType: EmissionFactorSubTypeEnum;
+
+  @ApiProperty({ example: 'Your Fair Share' })
+  @IsString()
+  @IsOptional()
+  companyName: string;
+
+  @ApiProperty({ example: 'Agricultural' })
+  @IsString()
+  @IsOptional()
+  subCategoryName: string;
 }
