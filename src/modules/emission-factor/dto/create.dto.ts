@@ -10,6 +10,7 @@ import {
   EmissionFactorSubTypeEnum,
   EmissionFactorCategoryEnum,
 } from '../enums';
+import { Transform } from 'class-transformer';
 
 export class CreateEmissionFactorDto {
   @ApiProperty({ example: 'Ædelmetaller (kg)' })
@@ -63,11 +64,13 @@ export class CreateEmissionFactorDto {
   sourceYear: string;
 
   @ApiProperty({
-    example: EmissionFactorCategoryEnum.One,
-    enum: EmissionFactorCategoryEnum,
+    example: 1,
   })
   @IsEnum(EmissionFactorCategoryEnum)
   @IsNotEmpty()
+  @Transform(({ value }) => {
+    return Number(value);
+  })
   category: EmissionFactorCategoryEnum;
 
   @ApiProperty({
