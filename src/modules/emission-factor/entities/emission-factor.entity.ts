@@ -50,4 +50,10 @@ export class EmissionFactor extends Basic {
     nullable: true,
   })
   subType: EmissionFactorSubTypeEnum;
+
+  @Column({ type: 'text', name: 'company_name', nullable: true })
+  companyName: string;
+
+  @Column({ type: 'text', name: 'sub_category_name', nullable: true })
+  subCategoryName: string;
 }
