@@ -31,8 +31,8 @@ export class EmissionFactor extends Basic {
   @Column({ type: 'numeric', name: 'outside_scope' })
   outsideScope: number;
 
-  @Column({ type: 'numeric', name: 'allocated_scope' })
-  allocatedScope: number;
+  @Column({ type: 'text', name: 'allocated_scope' })
+  allocatedScope: string;
 
   @Column({ type: 'text', name: 'source_year' })
   sourceYear: string;

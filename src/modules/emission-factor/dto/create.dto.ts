@@ -52,10 +52,10 @@ export class CreateEmissionFactorDto {
   @IsNumber()
   outsideScope: number;
 
-  @ApiProperty({ example: 0.0 })
+  @ApiProperty({ example: 'S3-C1/2' })
   @IsNotEmpty()
   @IsNumber()
-  allocatedScope: number;
+  allocatedScope: string;
 
   @ApiProperty({ example: 'EXIOBASE v3.3.16b2 (v. 2020 m. 2011-data)' })
   @IsString()
