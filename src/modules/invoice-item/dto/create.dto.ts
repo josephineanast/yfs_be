@@ -18,11 +18,6 @@ export class CreateInvoiceItemDto {
   @IsNotEmpty()
   description: string;
 
-  @ApiProperty({ example: 'Hercules Building' })
-  @IsString()
-  @IsNotEmpty()
-  buildingName: string;
-
   @ApiProperty({ example: '2023-12-13T08:30:00Z' })
   @IsDateString()
   @IsNotEmpty()
