@@ -46,30 +46,32 @@ export class EmissionFactorService {
   async getAllWithPagination(query: GetAllEmissionFactorQuery) {
     const currentPage = query.page ? parseInt(query.page.toString(), 10) : 1;
     const limit = query.limit ? parseInt(query.limit.toString(), 10) : 10;
+    const skip = (currentPage - 1) * limit;
 
-    console.log('A', query?.category);
-    const whereQuery: FindOptionsWhere<EmissionFactor> = {
-      deletedAt: null,
-      category: query?.category,
-    };
+    const qb = this.emissionFactorRepository
+      .createQueryBuilder('emissionFactor')
+      .where('emissionFactor.deletedAt IS NULL');
 
-    if (query?.keyword) {
-      const ilikeQuery = ILike(`%${query.keyword}%`);
-      whereQuery['danishName'] = ilikeQuery;
+    if (query?.category) {
+      qb.andWhere('emissionFactor.category = :category', {
+        category: query?.category,
+      });
     }
 
-    const orderQuery: FindOptionsOrder<EmissionFactor> = {
-      danishName: query?.sortingType,
-    };
+    if (query?.keyword) {
+      qb.andWhere(
+        'emissionFactor.danishName ILIKE :keyword OR emissionFactor.englishName ILIKE :keyword',
+        {
+          keyword: `%${query.keyword}%`,
+        },
+      );
+    }
 
-    orderQuery[query?.sortingBy] = query?.sortingType || 'ASC';
+    const sortingBy = query?.sortingBy || 'createdAt';
+    const sortingType = query?.sortingType || 'DESC';
+    qb.orderBy(`emissionFactor.${sortingBy}`, sortingType);
 
-    const [data, count] = await this.emissionFactorRepository.findAndCount({
-      skip: (currentPage - 1) * limit || 0,
-      take: limit || 10,
-      order: orderQuery,
-      where: whereQuery,
-    });
+    const [data, count] = await qb.skip(skip).take(limit).getManyAndCount();
 
     const totalPage = Math.ceil(count / limit);
 
