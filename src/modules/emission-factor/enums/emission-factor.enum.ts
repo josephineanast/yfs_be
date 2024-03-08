@@ -1,10 +1,10 @@
 export enum EmissionFactorSubTypeEnum {
-  Metals = 'metals',
-  Meterials = 'meterials',
-  Food = 'food',
-  Products = 'products',
-  Fuel = 'fuel',
-  Agriculture = 'agriculture',
+  Metals = 'Metals',
+  Materials = 'Materials',
+  Food = 'Food',
+  Products = 'Products',
+  Fuel = 'Fuel',
+  Agriculture = 'Agriculture',
 }
 
 export enum EmissionFactorCategoryEnum {

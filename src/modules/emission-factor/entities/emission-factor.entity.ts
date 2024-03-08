@@ -1,9 +1,11 @@
 import { Basic } from 'src/entities/basic.entity';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import {
   EmissionFactorSubTypeEnum,
   EmissionFactorCategoryEnum,
 } from '../enums';
+import { Invoice } from 'src/modules/invoice/entities';
+import { InvoiceItem } from 'src/modules/invoice-item/entities';
 
 @Entity('emission_factors')
 export class EmissionFactor extends Basic {
@@ -31,7 +33,7 @@ export class EmissionFactor extends Basic {
   @Column({ type: 'numeric', name: 'outside_scope' })
   outsideScope: number;
 
-  @Column({ type: 'text', name: 'allocated_scope' })
+  @Column({ type: 'varchar', name: 'allocated_scope' })
   allocatedScope: string;
 
   @Column({ type: 'text', name: 'source_year' })
@@ -40,6 +42,7 @@ export class EmissionFactor extends Basic {
   @Column({
     type: 'enum',
     enum: EmissionFactorCategoryEnum,
+    nullable: true,
   })
   category: EmissionFactorCategoryEnum;
 
@@ -51,9 +54,9 @@ export class EmissionFactor extends Basic {
   })
   subType: EmissionFactorSubTypeEnum;
 
-  @Column({ type: 'text', name: 'company_name', nullable: true })
-  companyName: string;
+  @OneToMany(() => Invoice, (invoice) => invoice.EmissionFactor)
+  invoices: Invoice;
 
-  @Column({ type: 'text', name: 'sub_category_name', nullable: true })
-  subCategoryName: string;
+  @OneToMany(() => InvoiceItem, (invoiceItem) => invoiceItem.EmissionFactor)
+  invoiceItems: InvoiceItem;
 }

@@ -8,6 +8,8 @@ import { ResponseModule } from './response/response.module';
 import { EmissionFactorModule } from './modules/emission-factor/emission-factor.module';
 import { EnvironmentalImpactModule } from './modules/environmental-impact/environmental-impact.module';
 import { ExternalApiModule } from './modules/external-api/external-api.module';
+import { InvoiceModule } from './modules/invoice/invoice.module';
+import { InvoiceItemModule } from './modules/invoice-item/invoice-item.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { ExternalApiModule } from './modules/external-api/external-api.module';
     EmissionFactorModule,
     EnvironmentalImpactModule,
     ExternalApiModule,
+    InvoiceModule,
+    InvoiceItemModule,
   ],
   controllers: [AppController],
 })

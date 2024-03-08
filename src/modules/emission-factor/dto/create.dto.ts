@@ -6,11 +6,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import {
-  EmissionFactorSubTypeEnum,
-  EmissionFactorCategoryEnum,
-} from '../enums';
-import { Transform } from 'class-transformer';
+import { EmissionFactorSubTypeEnum } from '../enums';
 
 export class CreateEmissionFactorDto {
   @ApiProperty({ example: 'Ædelmetaller (kg)' })
@@ -66,12 +62,8 @@ export class CreateEmissionFactorDto {
   @ApiProperty({
     example: 1,
   })
-  @IsEnum(EmissionFactorCategoryEnum)
   @IsNotEmpty()
-  @Transform(({ value }) => {
-    return Number(value);
-  })
-  category: EmissionFactorCategoryEnum;
+  category: number;
 
   @ApiProperty({
     example: EmissionFactorSubTypeEnum.Food,
@@ -81,14 +73,4 @@ export class CreateEmissionFactorDto {
   @IsEnum(EmissionFactorSubTypeEnum)
   @IsOptional()
   subType: EmissionFactorSubTypeEnum;
-
-  @ApiProperty({ example: 'Your Fair Share' })
-  @IsString()
-  @IsOptional()
-  companyName: string;
-
-  @ApiProperty({ example: 'Agricultural' })
-  @IsString()
-  @IsOptional()
-  subCategoryName: string;
 }
