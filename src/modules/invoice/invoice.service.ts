@@ -5,6 +5,7 @@ import {
   FindOptionsWhere,
   Repository,
   IsNull,
+  ILike,
 } from 'typeorm';
 
 import { Invoice } from './entities';
@@ -48,6 +49,11 @@ export class InvoiceService {
     const whereQuery: FindOptionsWhere<Invoice> = {
       deletedAt: IsNull(),
     };
+
+    if (query?.keyword) {
+      const ilikeQuery = ILike(`%${query.keyword}%`);
+      whereQuery['nickname'] = ilikeQuery;
+    }
 
     const orderQuery: FindOptionsOrder<Invoice> = {
       id: 'DESC',
